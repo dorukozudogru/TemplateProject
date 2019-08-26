@@ -79,14 +79,14 @@
                     </li>
                     <li class="treeview">
                         <a href="#">
-                            <i class="glyphicon glyphicon-folder-open"></i> <span>Controller</span>
+                            <i class="glyphicon glyphicon-folder-open"></i> <span>Main</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-left pull-right"></i>
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a asp-controller="Main" asp-action="Index"><i class="fa fa-circle-o text-red"></i> Müşteri Listesi</a></li>
-                            <li><a asp-controller="Main" asp-action="Index1"><i class="fa fa-circle-o text-red"></i> Poliçe Listesi</a></li>
+                            <li><a asp-controller="Customer" asp-action="Index"><i class="fa fa-circle-o text-red"></i> Müşteri Listesi</a></li>
+                            <li><a asp-controller="Main" asp-action="Index"><i class="fa fa-circle-o text-red"></i> Poliçe Listesi</a></li>
                             <li><a asp-controller="Main" asp-action="Index2"><i class="fa fa-circle-o text-red"></i> Pasif Poliçe Listesi</a></li>
                         </ul>
                     </li>
@@ -98,10 +98,8 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a asp-controller="System" asp-action="Index"><i class="fa fa-circle-o text-yellow"></i> Marka Listesi</a></li>
-                            <li><a asp-controller="System" asp-action="Index2"><i class="fa fa-circle-o text-yellow"></i> Model Listesi</a></li>
-                            <li><a asp-controller="System" asp-action="Index3"><i class="fa fa-circle-o text-yellow"></i> Sigorta Şirketi Listesi</a></li>
-                            <li><a asp-controller="System" asp-action="Index4"><i class="fa fa-circle-o text-yellow"></i> Poliçe Türü Listesi</a></li>
+                            <li><a asp-controller="System" asp-action="CarBrandIndex"><i class="fa fa-circle-o text-yellow"></i> Marka Listesi</a></li>
+                            <li><a asp-controller="System" asp-action="CarModelIndex"><i class="fa fa-circle-o text-yellow"></i> Model Listesi</a></li>
                         </ul>
                     </li>
                     <li class="treeview">
@@ -114,9 +112,6 @@
                         <ul class="treeview-menu">
                             <li><a asp-controller="Report" asp-action="XReport"><i class="fa fa-circle-o text-aqua"></i> X Report</a></li>
                             <li><a asp-controller="Report" asp-action="YReport"><i class="fa fa-circle-o text-aqua"></i> Y Report</a></li>
-                            <li><a asp-controller="Report" asp-action="ZReport"><i class="fa fa-circle-o text-aqua"></i> Z Report</a></li>
-                            <li><a asp-controller="Report" asp-action="TReport"><i class="fa fa-circle-o text-aqua"></i> T Report</a></li>
-                            <li><a asp-controller="Report" asp-action="QReport"><i class="fa fa-circle-o text-aqua"></i> Q Report</a></li>
                         </ul>
                     </li>
                 </ul>

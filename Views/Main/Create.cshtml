@@ -1,0 +1,139 @@
+﻿@model TemplateProject.Models.Insurances
+
+@{
+    ViewData["Title"] = "Poliçe Ekle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-wrapper">
+    <section class="content">
+        <div class="box-header">
+            <h2 class="box-title">
+                Poliçe Ekle
+            </h2>
+        </div>
+        <div class="row">
+            <div class="box">
+                <div class="box-body">
+                    <div class="col-md-4">
+                        <form asp-action="Create">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="CreatedAt" value="@DateTime.Now" />
+                            <input type="hidden" asp-for="InsuranceLastMailDate" value="@DateTime.MinValue" />
+                            <input type="hidden" asp-for="IsActive" value="@true" />
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <label asp-for="Customer.FullName" class="control-label"></label>
+                                        <select asp-for="CustomerId" class="form-control select2" style="width: 100%;" asp-items="@ViewBag.Customers"></select>
+                                        <span asp-validation-for="CustomerId" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <br />
+                                        <a class="btn btn-success" asp-controller="Customer" asp-action="Create">Müşteri Ekle</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="CarModel.CarBrandName" class="control-label"></label>
+                                <select id="Brand" asp-for="CarModel.CarBrand.Name" class="form-control"></select>
+                                <span asp-validation-for="CarModel.CarBrand.Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="CarModel.Name" class="control-label"></label>
+                                <select id="Model" asp-for="CarModel.Name" class="form-control"></select>
+                                <span asp-validation-for="CarModel.Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="LicencePlate" class="control-label"></label>
+                                <input asp-for="LicencePlate" class="form-control" autocomplete="off" />
+                                <span asp-validation-for="LicencePlate" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="InsuranceStartDate" class="control-label"></label>
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input asp-for="InsuranceStartDate" type="text" class="form-control pull-right" autocomplete="off" id="datepicker" />
+                                </div>
+                                <span asp-validation-for="InsuranceStartDate" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="InsuranceFinishDate" class="control-label"></label>
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input asp-for="InsuranceFinishDate" type="text" class="form-control pull-right" autocomplete="off" id="datepicker2" />
+                                </div>
+                                <span asp-validation-for="InsuranceFinishDate" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="InsuranceAmount" class="control-label"></label><label class="text-danger small"><strong>&nbsp;(Lütfen kuruş için "." kullanınız.)</strong></label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-try"></i></span>
+                                    <input asp-for="InsuranceAmount" class="form-control" autocomplete="off" />
+                                </div>
+                                <span asp-validation-for="InsuranceAmount" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="InsuranceBonus" class="control-label"></label><label class="text-danger small"><strong>&nbsp;(Lütfen kuruş için "." kullanınız.)</strong></label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-try"></i></span>
+                                    <input asp-for="InsuranceBonus" class="form-control" autocomplete="off" />
+                                </div>
+                                <span asp-validation-for="InsuranceBonus" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="InsuranceType" class="control-label"></label>
+                                <select asp-for="InsuranceType" class="form-control" asp-items="@Html.GetEnumSelectList<Insurances.InsuranceTypeEnum>()"></select>
+                                <span asp-validation-for="InsuranceType" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="InsurancePaymentType" class="control-label"></label>
+                                <select asp-for="InsurancePaymentType" class="form-control" asp-items="@Html.GetEnumSelectList<Insurances.InsurancePaymentTypeEnum>()"></select>
+                                <span asp-validation-for="InsurancePaymentType" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Ekle" class="btn btn-primary" />
+                                <a class="btn btn-dark" asp-action="Index">Listeye Geri Dön</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+@section Scripts {
+    @{
+<script>
+            function brandLoad() {
+                $('#Brand').html('');
+                $.getJSON('@Url.Action("GetCarBrands", "System")', function (result) {
+                    for (var i = 0; i < result.length; i++) {
+                        $("#Brand").append("<option id='" + result[i].id + "'>" + result[i].name + "</option>")
+                    }
+                    showValue(result[0].id);
+                })
+            }
+            window.onload = brandLoad;
+
+            $("#Brand").on("change", function (e) {
+                showValue(e.target.selectedOptions[0].id);
+            })
+
+            function showValue(brandId)
+            {
+                $('#Model').html('');
+                $.getJSON('@Url.Action("GetCarModelsById", "System")' + "?Id=" + brandId, function (result) {
+                    for (var i = 0; i < result.length; i++) {
+                        $("#Model").append("<option id='" + result[i].id + "'>" + result[i].name + "</option>")
+                    }
+                })
+            }
+</script>
+    }
+}

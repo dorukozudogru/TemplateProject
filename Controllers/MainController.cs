@@ -20,11 +20,11 @@ using static TemplateProject.Helpers.ProcessCollectionHelper;
 namespace TemplateProject.Controllers
 {
     [Authorize]
-    public class InsuranceController : Controller
+    public class MainController : Controller
     {
         private readonly IdentityContext _context;
 
-        public InsuranceController(IdentityContext context)
+        public MainController(IdentityContext context)
         {
             _context = context;
         }
@@ -35,10 +35,14 @@ namespace TemplateProject.Controllers
             return View();
         }
 
-        public IActionResult PassiveInsurances()
+        public IActionResult Index2()
         {
             FakeSession.Instance.Obj = JsonConvert.SerializeObject(_context.Insurances.Where(i => i.IsActive == false));
+            return View();
+        }
 
+        public IActionResult Index3()
+        {
             return View();
         }
 
@@ -59,7 +63,7 @@ namespace TemplateProject.Controllers
 
             var response = new PaginatedResponse<Insurances>
             {
-                //Data = listItems,
+                Data = listItems,
                 Draw = int.Parse(requestFormData["draw"]),
                 RecordsFiltered = insurances.Count,
                 RecordsTotal = insurances.Count

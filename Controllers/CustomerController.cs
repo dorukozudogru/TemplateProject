@@ -39,7 +39,7 @@ namespace TemplateProject.Controllers
 
             var response = new PaginatedResponse<Customers>
             {
-                //Data = listItems,
+                Data = listItems,
                 Draw = int.Parse(requestFormData["draw"]),
                 RecordsFiltered = customers.Count,
                 RecordsTotal = customers.Count

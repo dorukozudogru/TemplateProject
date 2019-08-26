@@ -1,0 +1,107 @@
+﻿@model IEnumerable<TemplateProject.Models.Customers>
+
+@{
+    ViewData["Title"] = "Müşteriler";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+    <link href="~/css/datatables.min.css" rel="stylesheet" />
+</head>
+
+<div class="content-wrapper">
+    <section class="content">
+        <h3>
+            <i class="glyphicon glyphicon-user"></i>&nbsp;Müşteriler
+        </h3>
+        <form method="post" enctype="multipart/form-data">
+            <a class="btn btn-success" asp-action="Create">Yeni Oluştur</a>
+        </form>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box table-responsive">
+                    <div class="box-body">
+                        <table id="ItemsTable" class="table table-bordered table-striped" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Id)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Name)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Surname)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.CitizenshipNo)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Email)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Phone)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Other)
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+@section Scripts{
+    <script src="~/js/datatables.min.js"></script>
+    <script src="~/js/moment.min.js"></script>
+    <script>
+        (function () {
+            var generateCustomerTable = $("#ItemsTable").DataTable({
+                "language": {
+                    processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Yükleniyor...</span> ',
+                    zeroRecords: "Hiçbir kayıt bulunamadı.",
+                    emptyTable: "Kayıt bulunmamaktadır.",
+                    search: "Ara:",
+                    oPaginate: {
+                        "sFirst": "İlk",
+                        "sLast": "Son",
+                        "sNext": "Sonraki",
+                        "sPrevious": "Önceki"
+                    },
+                    sLengthMenu: "_MENU_ adet kayıt getir",
+                    sInfo: "Toplam _TOTAL_ kayıttan _START_ - _END_ arası gösteriliyor",
+                },
+                "processing": true,
+                "serverSide": true,
+                "searchDelay": 1200,
+                "ajax": {
+                    "url": "/Customer/Post?isActive=true",
+                    "method": "POST"
+                },
+                "columns": [
+                    { "data": "id" },
+                    { "data": "name" },
+                    { "data": "surname" },
+                    { "data": "citizenshipNo" },
+                    { "data": "email" },
+                    { "data": "phone" },
+                    { "data": "other" },
+                    {
+                        "data": "actionId", render: function (data, type, row) {
+                            return '<div class="btn-group"><button type="button" class="btn btn-default btn-block dropdown-toggle" data-toggle="dropdown"><span class="fa fa-ellipsis-h"></span></button><ul class="dropdown-menu dropdown-menu-right" style="border: 1px solid #00c0ef"><li><a href="Customer/Edit/' + row.id + '" class="btn-link">Güncelle</a></li><li><a href="Customer/Details/' + row.id + '" class="btn-link">Detaylar</a></li><li><a href="Customer/Delete/' + row.id + '" class="btn-link">Sil</a></li></ul></div>'
+                        }
+                    }
+                ],
+                "ordering": true,
+                "paging": true,
+                "pagingType": "simple_numbers",
+                "pageLength": 100
+            });
+        })(jQuery);
+    </script>
+}
