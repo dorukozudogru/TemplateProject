@@ -1,10 +1,12 @@
 using System;
 
-namespace TemplateProject.Models
+namespace TemplateProject.Models.ViewModels
 {
     public class ErrorViewModel
     {
         public string RequestId { get; set; }
+
+        public string RequestMessage { get; set; }
 
         public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
     }
